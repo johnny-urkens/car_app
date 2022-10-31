@@ -13,7 +13,7 @@ class _LoginPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("testtekst"),
+        title: const Text("login scherm"),
       ),
       body: const Center(
         child: MyCustomForm(

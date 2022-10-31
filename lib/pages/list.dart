@@ -12,7 +12,7 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Testtekst"),
+        title: const Text("Alle Wagens"),
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),
@@ -52,14 +52,27 @@ class CarListState extends State<CarList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    // AssetImage asset = AssetImage('assets/audi.jpg');
+    // Image image = Image(image: asset);
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          childAspectRatio: 4 / 4,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10),
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
+        Image image;
         return Card(
-          color: Colors.white,
+          color: Color.fromARGB(255, 227, 234, 233),
           elevation: 2.0,
           child: Column(
             children: [
+              image = Image(
+                image: AssetImage('assets/car$position.jpg'),
+                width: 315,
+                height: 110,
+              ),
               Text(carList[position].carBrand),
               Text('Maximum Speed  ${carList[position].maxSpeed}'),
               Text('Number of seats  ${carList[position].numberOfSeats}'),
