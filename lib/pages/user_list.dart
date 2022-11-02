@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../apis/car_api.dart';
+import '../models/PersonalCar.dart';
 import '../models/car.dart';
 
-class ListPage extends StatelessWidget {
+class UserListPage extends StatelessWidget {
   String name;
 
-  ListPage({super.key, required this.name});
+  UserListPage({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -16,33 +17,37 @@ class ListPage extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),
-        child: const CarList(),
+        child: PersonalCarList(
+          name: name,
+        ),
       ),
     );
   }
 }
 
-class CarList extends StatefulWidget {
-  const CarList({super.key});
+class PersonalCarList extends StatefulWidget {
+  String name;
+
+  PersonalCarList({super.key, required this.name});
 
   @override
-  CarListState createState() {
-    return CarListState();
+  PersonalCarListState createState() {
+    return PersonalCarListState();
   }
 }
 
-class CarListState extends State<CarList> {
-  List<Car> carList = [];
+class PersonalCarListState extends State<PersonalCarList> {
+  List<PersonalCar> carList = [];
   int count = 0;
 
   @override
   void initState() {
     super.initState();
-    _getCars();
+    _getPersonalCars();
   }
 
-  void _getCars() {
-    CarApi.fetchCars().then((result) {
+  void _getPersonalCars() {
+    CarApi.fetchPersonalCars(widget.name).then((result) {
       setState(() {
         carList = result;
         count = result.length;
@@ -62,20 +67,20 @@ class CarListState extends State<CarList> {
           mainAxisSpacing: 10),
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
+        var t = carList[position].carBrand;
         Image image;
         return Card(
-          color: const Color.fromARGB(255, 227, 234, 233),
+          color: Color.fromARGB(255, 227, 234, 233),
           elevation: 2.0,
           child: Column(
             children: [
               image = Image(
-                image: AssetImage('assets/car$position.jpg'),
+                image: AssetImage('assets/$t.jpg'),
                 width: 315,
                 height: 110,
               ),
               Text(carList[position].carBrand),
-              Text('Maximum Speed  ${carList[position].maxSpeed}'),
-              Text('Number of seats  ${carList[position].numberOfSeats}'),
+              Text((carList[position].userScores[0]).toString()),
             ],
           ),
         );

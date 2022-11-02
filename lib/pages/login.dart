@@ -1,4 +1,5 @@
 import 'package:car_app/pages/list.dart';
+import 'package:car_app/pages/user_list.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -98,7 +99,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ListPage(name: nameController.text),
+                      builder: (context) =>
+                          UserListPage(name: nameController.text),
                     ),
                   );
                 }
