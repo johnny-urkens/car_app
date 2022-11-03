@@ -1,14 +1,14 @@
-class PersonalCar {
+class Rating {
   String carBrand;
   List userScores;
   // String userName;
 
-  PersonalCar({
+  Rating({
     required this.carBrand,
     required this.userScores,
   });
 
-  factory PersonalCar.fromJson(Map<String, dynamic> json) {
+  factory Rating.fromJson(Map<String, dynamic> json) {
     var uScore = [];
     if (json['userScores'] != null) {
       uScore = <UserScores>[];
@@ -16,7 +16,7 @@ class PersonalCar {
         uScore.add(UserScores.fromJson(e));
       }
     }
-    return PersonalCar(
+    return Rating(
       carBrand: json['carBrand'],
       userScores: uScore,
     );

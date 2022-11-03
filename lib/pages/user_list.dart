@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../pages/rating.dart';
 import '../apis/car_api.dart';
-import '../models/PersonalCar.dart';
-import '../models/car.dart';
+import '../models/personalCar.dart';
 
 class UserListPage extends StatelessWidget {
   String name;
@@ -68,20 +67,36 @@ class PersonalCarListState extends State<PersonalCarList> {
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
         var t = carList[position].carBrand;
+        List userScores = [];
+        userScores.add(carList[position].userScores[0].userName);
         Image image;
         return Card(
-          color: Color.fromARGB(255, 227, 234, 233),
+          color: const Color.fromARGB(255, 227, 234, 233),
           elevation: 2.0,
-          child: Column(
-            children: [
-              image = Image(
-                image: AssetImage('assets/$t.jpg'),
-                width: 315,
-                height: 110,
-              ),
-              Text(carList[position].carBrand),
-              Text((carList[position].userScores[0]).toString()),
-            ],
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RatingPage(
+                            carBrand: t,
+                            userScores: userScores,
+                          )));
+              print(userScores);
+              print(t);
+            },
+            child: Column(
+              children: [
+                image = Image(
+                  image: AssetImage('assets/$t.jpg'),
+                  width: 315,
+                  height: 110,
+                ),
+                Text(carList[position].carBrand),
+                Text(carList[position].userScores[0].userName),
+                Text(carList[position].userScores[0].scoreNumber.toString()),
+              ],
+            ),
           ),
         );
       },
