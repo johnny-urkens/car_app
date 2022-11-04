@@ -1,3 +1,4 @@
+import 'package:car_app/models/statistic.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -48,4 +49,21 @@ class CarApi {
       throw Exception('Failed to load Rating');
     }
   }
+
+  // static Future<Car> updateRating(
+  //     String userName, String carBrand, int scoreNumber) async {
+  //   var url = Uri.https(server, '/statistics');
+  //   var update = 
+
+  //   final http.Response response = await http.put(url,
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: jsonEncode());
+  //   if (response.statusCode == 200) {
+  //     return Statistic.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw Exception('Failed to update rating');
+  //   }
+  // }
 }

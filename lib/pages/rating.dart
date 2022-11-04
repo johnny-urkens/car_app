@@ -13,7 +13,8 @@ class RatingPage extends StatefulWidget {
 
 class _RatingPageState extends State<RatingPage> {
   Rating? rating;
-
+  // double score = 5.0;
+  int score = 5;
   @override
   void initState() {
     if (widget.carBrand == "" || widget.userScores == []) {
@@ -38,6 +39,7 @@ class _RatingPageState extends State<RatingPage> {
       return const Center(child: CircularProgressIndicator());
     } else {
       var i = rating!.carBrand;
+
       return Scaffold(
         appBar: AppBar(
           title: const Text('DetailPage'),
@@ -54,10 +56,37 @@ class _RatingPageState extends State<RatingPage> {
               Text(rating!.carBrand),
               Text(rating!.userScores[0].userName),
               Text(rating!.userScores[0].scoreNumber.toString()),
+              Text(
+                score.toString(),
+                style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.w900),
+              ),
+              Slider(
+                  value: score.toDouble(),
+                  min: 0.0,
+                  max: 10.0,
+                  onChanged: (double newValue) {
+                    setState(() {
+                      // score = (newValue * 2).floorToDouble() / 2;
+                      score = newValue.round();
+                      print(score);
+                    });
+                  }),
+              // ElevatedButton(
+              //     onPressed: _updateRating, child: const Text('Update rating'))
             ],
           ),
         ),
       );
     }
   }
+
+  // void _updateRating() {
+  //   CarApi.updateRating(rating!.userScores[0].userName, rating!.carBrand, score)
+  //       .then((result) {
+  //     Navigator.pop(context, true);
+  //   });
+  // }
 }
