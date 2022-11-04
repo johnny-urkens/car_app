@@ -1,3 +1,4 @@
+import 'package:car_app/pages/user_list.dart';
 import 'package:flutter/material.dart';
 import '../apis/car_api.dart';
 import '../models/rating.dart';
@@ -74,8 +75,8 @@ class _RatingPageState extends State<RatingPage> {
                       print(score);
                     });
                   }),
-              // ElevatedButton(
-              //     onPressed: _updateRating, child: const Text('Update rating'))
+              ElevatedButton(
+                  onPressed: _updateRating, child: const Text('Update rating'))
             ],
           ),
         ),
@@ -83,10 +84,16 @@ class _RatingPageState extends State<RatingPage> {
     }
   }
 
-  // void _updateRating() {
-  //   CarApi.updateRating(rating!.userScores[0].userName, rating!.carBrand, score)
-  //       .then((result) {
-  //     Navigator.pop(context, true);
-  //   });
-  // }
+  void _updateRating() {
+    CarApi.updateRating(rating!.userScores[0].userName, rating!.carBrand, score)
+        .then((result) {
+      Navigator.pop(context,true);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                UserListPage(name: rating!.userScores[0].userName)),
+      );
+    });
+  }
 }
