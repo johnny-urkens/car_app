@@ -2,6 +2,7 @@ import 'package:car_app/pages/user_list.dart';
 import 'package:flutter/material.dart';
 import '../apis/car_api.dart';
 import '../models/rating.dart';
+import 'navigation.dart';
 
 class RatingPage extends StatefulWidget {
   final String carBrand;
@@ -87,13 +88,12 @@ class _RatingPageState extends State<RatingPage> {
   void _updateRating() {
     CarApi.updateRating(rating!.userScores[0].userName, rating!.carBrand, score)
         .then((result) {
-      Navigator.pop(context,true);
+      Navigator.pop(context, true);
       Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                UserListPage(name: rating!.userScores[0].userName)),
-      );
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NavigationPage(),
+          ));
     });
   }
 }

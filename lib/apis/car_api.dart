@@ -26,6 +26,7 @@ class CarApi {
     var url = Uri.https(server, '/statistics/user/$name');
 
     final response = await http.get(url);
+    print(url);
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse

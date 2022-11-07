@@ -5,9 +5,14 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<StatefulWidget> createState() => MyAppState();
+}
+
+class MyAppState extends State {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -17,9 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(
-        name: '',
-      ),
+      home: const LoginPage(),
     );
   }
 }

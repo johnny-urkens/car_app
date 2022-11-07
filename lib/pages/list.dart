@@ -4,15 +4,13 @@ import '../apis/car_api.dart';
 import '../models/car.dart';
 
 class ListPage extends StatelessWidget {
-  String name;
-
-  ListPage({super.key, required this.name});
+  const ListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text('All cars'),
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),

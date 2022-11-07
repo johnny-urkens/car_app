@@ -1,23 +1,49 @@
+import 'package:car_app/pages/list.dart';
 import 'package:flutter/material.dart';
 import '../pages/rating.dart';
 import '../apis/car_api.dart';
 import '../models/personalCar.dart';
+import '../utils/user_secure_storage.dart';
 
-class UserListPage extends StatelessWidget {
-  String name;
+class UserListPage extends StatefulWidget {
+  const UserListPage();
 
-  UserListPage({super.key, required this.name});
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() => UserListPageState();
+}
+
+class UserListPageState extends State {
+  String naam1 = '';
+
+  UserListPageState();
+  @override
+  void initState() {
+    super.initState();
+
+    init();
+  }
+
+  Future init() async {
+    final naam = await UsersecureStorage.getUserName() ?? '';
+    print('naam1' + naam);
+
+    setState(() {
+      naam1 = naam;
+    });
+    print('1 $naam1');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text('test'),
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),
         child: PersonalCarList(
-          name: name,
+          name: naam1,
         ),
       ),
     );
@@ -38,15 +64,28 @@ class PersonalCarList extends StatefulWidget {
 class PersonalCarListState extends State<PersonalCarList> {
   List<PersonalCar> carList = [];
   int count = 0;
+  PersonalCarList? cars;
+  late String name = widget.name;
 
   @override
   void initState() {
     super.initState();
-    _getPersonalCars();
+    init();
+  }
+
+  Future init() async {
+    final naam = await UsersecureStorage.getUserName() ?? '';
+    print('naam1' + naam);
+
+    setState(() {
+      name = naam;
+      _getPersonalCars();
+    });
+    print('2 $name');
   }
 
   void _getPersonalCars() {
-    CarApi.fetchPersonalCars(widget.name).then((result) {
+    CarApi.fetchPersonalCars(name).then((result) {
       setState(() {
         carList = result;
         count = result.length;
@@ -56,8 +95,9 @@ class PersonalCarListState extends State<PersonalCarList> {
 
   @override
   Widget build(BuildContext context) {
-    // AssetImage asset = AssetImage('assets/audi.jpg');
-    // Image image = Image(image: asset);
+    // if (cars == null) {
+    //   return const Center(child: CircularProgressIndicator());
+    // } else {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
@@ -73,6 +113,7 @@ class PersonalCarListState extends State<PersonalCarList> {
         return Card(
           color: const Color.fromARGB(255, 227, 234, 233),
           elevation: 2.0,
+          //Gesturedetector zorgt ervoor dat je de ontap methode kan gebruiken
           child: GestureDetector(
             onTap: () {
               Navigator.push(
@@ -103,3 +144,4 @@ class PersonalCarListState extends State<PersonalCarList> {
     );
   }
 }
+// }

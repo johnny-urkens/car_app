@@ -1,9 +1,12 @@
 import 'package:car_app/pages/list.dart';
 import 'package:car_app/pages/user_list.dart';
+import 'package:car_app/utils/user_secure_storage.dart';
 import 'package:flutter/material.dart';
 
+import 'navigation.dart';
+
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required String name}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
@@ -46,6 +49,11 @@ class MyCustomFormState extends State<MyCustomForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   var user = '';
+
+  void save() async {
+    await UsersecureStorage.setUserName(nameController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -89,6 +97,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
               onPressed: () {
+                save();
                 // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world,
@@ -99,8 +108,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          UserListPage(name: nameController.text),
+                      builder: (context) => const NavigationPage(),
                     ),
                   );
                 }
