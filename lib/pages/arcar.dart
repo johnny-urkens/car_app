@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/armultipletargets.dart';
+import '../widgets/arworld.dart';
 
 class ArCarPage extends StatefulWidget {
   const ArCarPage({Key? key}) : super(key: key);
@@ -13,11 +14,11 @@ class _ArCarPageState extends State<ArCarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dino's"),
+        title: const Text("Car's"),
       ),
       body: const Center(
           // Here we load the Widget with the AR Dino experience
-          child: ArMultipleTargetsWidget()),
+          child: ARWorldWidget()),
     );
   }
 }
