@@ -38,7 +38,7 @@ class UserListPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('test'),
+        title: Text('$naam1 \'s rated carlist'),
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),

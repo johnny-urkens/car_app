@@ -1,5 +1,6 @@
 import 'package:car_app/pages/list.dart';
 import 'package:car_app/pages/login.dart';
+import 'package:car_app/pages/scan.dart';
 import 'package:car_app/pages/user_list.dart';
 import 'package:car_app/utils/user_secure_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -27,7 +28,7 @@ class NavigationPageState extends State {
   final screens = [
     const UserListPage(),
     const ListPage(),
-    const ListPage(),
+    const ScanPage(),
     const LoginPage()
   ];
   @override
@@ -65,7 +66,7 @@ class NavigationPageState extends State {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.logout),
-              label: 'Logout',
+              label: 'Login',
             ),
           ],
           currentIndex: _selectedIndex,
