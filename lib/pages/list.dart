@@ -10,7 +10,7 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All cars'),
+        title: const Text('All cars'),
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),
@@ -50,8 +50,6 @@ class CarListState extends State<CarList> {
 
   @override
   Widget build(BuildContext context) {
-    // AssetImage asset = AssetImage('assets/audi.jpg');
-    // Image image = Image(image: asset);
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,

@@ -1,4 +1,5 @@
 import 'package:car_app/pages/list.dart';
+import 'package:car_app/pages/scan.dart';
 import 'package:flutter/material.dart';
 import '../pages/rating.dart';
 import '../apis/car_api.dart';
@@ -6,7 +7,7 @@ import '../models/personalCar.dart';
 import '../utils/user_secure_storage.dart';
 
 class UserListPage extends StatefulWidget {
-  const UserListPage();
+  const UserListPage({super.key});
 
   @override
   // ignore: no_logic_in_create_state
@@ -14,7 +15,7 @@ class UserListPage extends StatefulWidget {
 }
 
 class UserListPageState extends State {
-  String naam1 = '';
+  String userName1 = '';
 
   UserListPageState();
   @override
@@ -25,25 +26,23 @@ class UserListPageState extends State {
   }
 
   Future init() async {
-    final naam = await UsersecureStorage.getUserName() ?? '';
-    print('naam1' + naam);
+    final name = await UsersecureStorage.getUserName() ?? '';
 
     setState(() {
-      naam1 = naam;
+      userName1 = name;
     });
-    print('1 $naam1');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$naam1 \'s rated carlist'),
+        title: Text('$userName1\'s rated carlist'),
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),
         child: PersonalCarList(
-          name: naam1,
+          name: userName1,
         ),
       ),
     );
@@ -64,6 +63,7 @@ class PersonalCarList extends StatefulWidget {
 class PersonalCarListState extends State<PersonalCarList> {
   List<PersonalCar> carList = [];
   int count = 0;
+  // het vraagteken wil zeggen dat de peronalcarlist leeg kan zijn
   PersonalCarList? cars;
   late String name = widget.name;
 
@@ -74,14 +74,12 @@ class PersonalCarListState extends State<PersonalCarList> {
   }
 
   Future init() async {
-    final naam = await UsersecureStorage.getUserName() ?? '';
-    print('naam1' + naam);
+    final userName2 = await UsersecureStorage.getUserName() ?? '';
 
     setState(() {
-      name = naam;
+      name = userName2;
       _getPersonalCars();
     });
-    print('2 $name');
   }
 
   void _getPersonalCars() {
@@ -95,53 +93,62 @@ class PersonalCarListState extends State<PersonalCarList> {
 
   @override
   Widget build(BuildContext context) {
-    // if (cars == null) {
-    //   return const Center(child: CircularProgressIndicator());
-    // } else {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 4 / 4,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10),
-      itemCount: count,
-      itemBuilder: (BuildContext context, int position) {
-        var t = carList[position].carBrand;
-        List userScores = [];
-        userScores.add(carList[position].userScores[0].userName);
-        Image image;
-        return Card(
-          color: const Color.fromARGB(255, 227, 234, 233),
-          elevation: 2.0,
-          //Gesturedetector zorgt ervoor dat je de ontap methode kan gebruiken
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RatingPage(
-                            carBrand: t,
-                            userScores: userScores,
-                          )));
-              print(userScores);
-              print(t);
-            },
-            child: Column(
-              children: [
-                image = Image(
-                  image: AssetImage('assets/$t.jpg'),
-                  width: 315,
-                  height: 110,
-                ),
-                Text(carList[position].carBrand),
-                Text(carList[position].userScores[0].userName),
-                Text(carList[position].userScores[0].scoreNumber.toString()),
-              ],
-            ),
+    if (count == 0) {
+      return Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Seems that you don\'t have any cars rated yet'),
+          ElevatedButton(
+            child: const Text('Go to scanpage'),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ScanPage())),
           ),
-        );
-      },
-    );
+        ],
+      ));
+    } else {
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 4 / 4,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10),
+        itemCount: count,
+        itemBuilder: (BuildContext context, int position) {
+          var brand = carList[position].carBrand;
+          List userScores = [];
+          userScores.add(carList[position].userScores[0].userName);
+          Image image;
+          return Card(
+            color: const Color.fromARGB(255, 227, 234, 233),
+            elevation: 2.0,
+            //Gesturedetector zorgt ervoor dat je de ontap methode kan gebruiken
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RatingPage(
+                              carBrand: brand,
+                              userScores: userScores,
+                            )));
+              },
+              child: Column(
+                children: [
+                  image = Image(
+                    image: AssetImage('assets/$brand.jpg'),
+                    width: 315,
+                    height: 110,
+                  ),
+                  Text(carList[position].carBrand),
+                  Text(carList[position].userScores[0].userName),
+                  Text(carList[position].userScores[0].scoreNumber.toString()),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 }
-// }

@@ -1,5 +1,3 @@
-import 'package:car_app/pages/list.dart';
-import 'package:car_app/pages/user_list.dart';
 import 'package:car_app/utils/user_secure_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -50,6 +48,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   var user = '';
 
+//  om de gebruikersnaam in de localstorage
   void save() async {
     await UsersecureStorage.setUserName(nameController.text);
   }
@@ -100,11 +99,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                 save();
                 // Validate returns true if the form is valid, or false otherwise.
                 if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(content: Text('Processing Data')),
-                  // );
+                  // If the form is valid, navigate to the navigationpage with Navigator.push
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

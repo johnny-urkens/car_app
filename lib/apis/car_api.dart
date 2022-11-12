@@ -9,6 +9,7 @@ import '../models/rating.dart';
 class CarApi {
   static String server = 'apt-edge-service-johnny-urkens.cloud.okteto.net';
 
+// Ophalen van alle wagens
   static Future<List<Car>> fetchCars() async {
     var url = Uri.https(server, '/statistics/cars');
 
@@ -22,6 +23,7 @@ class CarApi {
     }
   }
 
+// ophalen van de wagens waarvoor een gebruiker reeds een rating heeft gegeven
   static Future<List<PersonalCar>> fetchPersonalCars(String name) async {
     var url = Uri.https(server, '/statistics/user/$name');
 
@@ -37,12 +39,12 @@ class CarApi {
     }
   }
 
+// ophalen van één bepaalde wagen waarvoor een gebruiker al een rating heeft gegeven
   static Future<Rating> fetchRating(String carBrand, List userScores) async {
     var name = userScores[0];
-    print(name);
-    print('api + $carBrand');
+    // print(name);
+    // print('api + $carBrand');
     var url = Uri.https(server, '/statistics/$name/car/$carBrand');
-    print(url);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return Rating.fromJson(jsonDecode(response.body));
@@ -51,6 +53,7 @@ class CarApi {
     }
   }
 
+// Om een update te doen van de rating
   static Future<PersonalCar> updateRating(
       String userName, String carBrand, int scoreNumber) async {
     final Map<String, String> _queryParameters = <String, String>{
@@ -59,7 +62,7 @@ class CarApi {
       'scoreNumber': '$scoreNumber'
     };
     var url = Uri.https(server, '/statistics', _queryParameters);
-    print(url);
+    // print(url);
     var userScores = [];
     userScores.add(userName);
     userScores.add(scoreNumber);
