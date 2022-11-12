@@ -19,6 +19,7 @@ class _RatingPageState extends State<RatingPage> {
   int score = 5;
   @override
   void initState() {
+    super.initState();
     if (widget.carBrand == "" || widget.userScores == []) {
       rating = Rating(carBrand: "", userScores: []);
     } else {

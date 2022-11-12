@@ -21,12 +21,12 @@ class _ScanPageState extends State<ScanPage> {
       ),
       body: Center(
         child: ElevatedButton(
-            onPressed: navigateToDinos, child: const Text("Scan a car")),
+            onPressed: navigateToCars, child: const Text("Scan a car")),
       ),
     );
   }
 
-  void navigateToDinos() {
+  void navigateToCars() {
     debugPrint("to the cars");
 
     checkDeviceCompatibility().then((value) => {

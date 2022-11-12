@@ -14,11 +14,12 @@ class _ArCarPageState extends State<ArCarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Car's"),
+        title: const Text("Cars"),
       ),
       body: const Center(
-          // Here we load the Widget with the AR Dino experience
-          child: ARWorldWidget()),
+        // Here we load the Widget with the AR Dino experience
+        child: ARWorldWidget(),
+      ),
     );
   }
 }
