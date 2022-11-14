@@ -1,4 +1,5 @@
-import 'package:car_app/models/statistic.dart';
+// import 'package:car_app/models/statistic.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -28,7 +29,6 @@ class CarApi {
     var url = Uri.https(server, '/statistics/user/$name');
 
     final response = await http.get(url);
-    print(url);
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse
@@ -56,12 +56,12 @@ class CarApi {
 // Om een update te doen van de rating
   static Future<PersonalCar> updateRating(
       String userName, String carBrand, int scoreNumber) async {
-    final Map<String, String> _queryParameters = <String, String>{
-      'userName': '$userName',
-      'carBrand': '$carBrand',
+    final Map<String, String> queryParameters = <String, String>{
+      'userName': userName,
+      'carBrand': carBrand,
       'scoreNumber': '$scoreNumber'
     };
-    var url = Uri.https(server, '/statistics', _queryParameters);
+    var url = Uri.https(server, '/statistics', queryParameters);
     // print(url);
     var userScores = [];
     userScores.add(userName);
