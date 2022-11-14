@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../apis/car_api.dart';
 import '../models/car.dart';
 
@@ -30,6 +29,7 @@ class CarList extends StatefulWidget {
 }
 
 class CarListState extends State<CarList> {
+  // initialize an emty carList en count variable with the value of 0
   List<Car> carList = [];
   int count = 0;
 
@@ -39,6 +39,7 @@ class CarListState extends State<CarList> {
     _getCars();
   }
 
+  // get all cars and put them in the carList. set the count to the number of cars in the list
   void _getCars() {
     CarApi.fetchCars().then((result) {
       setState(() {
@@ -50,32 +51,38 @@ class CarListState extends State<CarList> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 4 / 4,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10),
-      itemCount: count,
-      itemBuilder: (BuildContext context, int position) {
-        Image image;
-        return Card(
-          color: const Color.fromARGB(255, 227, 234, 233),
-          elevation: 2.0,
-          child: Column(
-            children: [
-              image = Image(
-                image: AssetImage('assets/car$position.jpg'),
-                width: 315,
-                height: 110,
-              ),
-              Text(carList[position].carBrand),
-              Text('Maximum Speed  ${carList[position].maxSpeed}'),
-              Text('Number of seats  ${carList[position].numberOfSeats}'),
-            ],
-          ),
-        );
-      },
-    );
+    if (count == 0) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 4 / 4,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10),
+        itemCount: count,
+        itemBuilder: (BuildContext context, int position) {
+          Image image;
+          String i = carList[position].carBrand;
+          print(i);
+          return Card(
+            color: const Color.fromARGB(255, 227, 234, 233),
+            elevation: 2.0,
+            child: Column(
+              children: [
+                image = Image(
+                  image: AssetImage('assets/$i.jpg'),
+                  width: 315,
+                  height: 110,
+                ),
+                Text(carList[position].carBrand),
+                Text('Maximum Speed  ${carList[position].maxSpeed}'),
+                Text('Number of seats  ${carList[position].numberOfSeats}'),
+              ],
+            ),
+          );
+        },
+      );
+    }
   }
 }

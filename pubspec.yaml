@@ -75,12 +75,7 @@ flutter:
     - wikitude_object_tracking/js/
     - wikitude_object_tracking/css/
     - wikitude_object_tracking/assets/
-    - samples/
-    - samples/03_MultipleTargets_1_MultipleTargets/
-    - samples/03_MultipleTargets_1_MultipleTargets/js/
-    - samples/03_MultipleTargets_1_MultipleTargets/css/
-    - samples/03_MultipleTargets_1_MultipleTargets/assets/
-    - samples/03_MultipleTargets_1_MultipleTargets/assets/models/
+
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

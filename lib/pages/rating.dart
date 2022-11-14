@@ -1,4 +1,4 @@
-import 'package:car_app/pages/user_list.dart';
+// import 'package:car_app/pages/user_list.dart';
 import 'package:flutter/material.dart';
 import '../apis/car_api.dart';
 import '../models/rating.dart';
@@ -15,8 +15,7 @@ class RatingPage extends StatefulWidget {
 
 class _RatingPageState extends State<RatingPage> {
   Rating? rating;
-  // double score = 5.0;
-  int score = 5;
+  int score = 0;
   @override
   void initState() {
     super.initState();
@@ -38,11 +37,12 @@ class _RatingPageState extends State<RatingPage> {
   @override
   Widget build(BuildContext context) {
     Image image;
+
     if (rating == null) {
       return const Center(child: CircularProgressIndicator());
     } else {
+      // variable to store the name from the car. so we can use it to get the accompanying photo
       var i = rating!.carBrand;
-
       return Scaffold(
         appBar: AppBar(
           title: const Text('DetailPage'),
@@ -52,6 +52,7 @@ class _RatingPageState extends State<RatingPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               image = Image(
+                //get the accompanying photo
                 image: AssetImage('assets/$i.jpg'),
                 width: 315,
                 height: 110,
@@ -59,11 +60,18 @@ class _RatingPageState extends State<RatingPage> {
               Text(rating!.carBrand),
               Text(rating!.userScores[0].userName),
               Text(rating!.userScores[0].scoreNumber.toString()),
-              Text(
-                score.toString(),
-                style: const TextStyle(
+              SizedBox(
+                height: 40.0,
+                width: 250.0,
+                child: Divider(
+                  color: Colors.blue.shade500,
+                ),
+              ),
+              const Text(
+                'Use the slider to set new rating value',
+                style: TextStyle(
                     color: Colors.blue,
-                    fontSize: 25.0,
+                    fontSize: 15.0,
                     fontWeight: FontWeight.w900),
               ),
               Slider(
@@ -72,11 +80,16 @@ class _RatingPageState extends State<RatingPage> {
                   max: 10.0,
                   onChanged: (double newValue) {
                     setState(() {
-                      // score = (newValue * 2).floorToDouble() / 2;
                       score = newValue.round();
-                      print(score);
                     });
                   }),
+              Text(
+                score.toString(),
+                style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.w900),
+              ),
               ElevatedButton(
                   onPressed: _updateRating, child: const Text('Update rating'))
             ],
