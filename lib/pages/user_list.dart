@@ -119,13 +119,14 @@ class PersonalCarListState extends State<PersonalCarList> {
         return Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Seems that you don\'t have any cars rated yet'),
-            ElevatedButton(
-              child: const Text('Go to scanpage'),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ScanPage())),
-            ),
+          children: const [
+            Text('Seems that you don\'t have any cars rated yet.'),
+            Text('Click on the Scan tab in the navigation bar below.')
+            // ElevatedButton(
+            //   child: const Text('Go to scanpage'),
+            //   onPressed: () => Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => const ScanPage())),
+            // ),
           ],
         ));
       } else {
@@ -164,7 +165,7 @@ class PersonalCarListState extends State<PersonalCarList> {
                     ),
                     Text(carList[position].carBrand.capitalize()),
                     Text(
-                        carList[position].userScores[0].scoreNumber.toString()),
+                        'Rating: ${carList[position].userScores[0].scoreNumber}/10'),
                   ],
                 ),
               ),

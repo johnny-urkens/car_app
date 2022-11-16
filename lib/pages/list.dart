@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../apis/car_api.dart';
 import '../models/car.dart';
+import '../utils/capitalize.dart';
 
 class ListPage extends StatelessWidget {
   const ListPage({super.key});
@@ -75,9 +76,9 @@ class CarListState extends State<CarList> {
                   width: 315,
                   height: 110,
                 ),
-                Text(carList[position].carBrand),
-                Text('Maximum Speed  ${carList[position].maxSpeed}'),
-                Text('Number of seats  ${carList[position].numberOfSeats}'),
+                Text(carList[position].carBrand.capitalize()),
+                Text('Max speed: ${carList[position].maxSpeed} km/h'),
+                Text('Number of seats: ${carList[position].numberOfSeats}'),
               ],
             ),
           );

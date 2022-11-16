@@ -16,7 +16,7 @@
         <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
         <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
    <application
-        android:label="car_app"
+        android:label="car rater"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

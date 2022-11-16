@@ -68,12 +68,12 @@ class NavigationPageState extends State {
               label: 'Scan',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.login),
-              label: 'Login',
+              icon: Icon(Icons.logout),
+              label: 'Logout',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Colors.lightGreen[800],
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
         ));
