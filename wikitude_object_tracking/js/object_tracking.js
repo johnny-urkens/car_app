@@ -7,7 +7,7 @@ var World = {
 
     createOverlays: function createOverlaysFn() {
                 // Use christmas.wto to recognize the chirstmas figures
-                this.targetCollectionResource = new AR.TargetCollectionResource("assets/autotjes.wto", {
+                this.targetCollectionResource = new AR.TargetCollectionResource("assets/tesla.wto", {
                     onError: World.onError
                 });
         
@@ -48,7 +48,7 @@ var World = {
         
                 // Push the correct number of frames into a frames array
                 framesCar = [];
-                for (i = 0; i< 92; i++) {
+                for (i = 0; i< 8; i++) {
                     framesCar.push(i);
                 }
                 // Play those frames, with a pause of 80 (milliseconds?), repeat (-1)
@@ -57,7 +57,7 @@ var World = {
 
         
                 // Show Gingy when "boom" (name of the target object in the .wto file) is recognized
-                this.pageCar = new AR.ObjectTrackable(this.tracker, "redcar", {
+                this.pageCar = new AR.ObjectTrackable(this.tracker, "*", {
                     drawables: {
                         cam: [overlayCar],
                     },

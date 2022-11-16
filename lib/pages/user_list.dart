@@ -78,7 +78,7 @@ class PersonalCarListState extends State<PersonalCarList> {
   void initState() {
     super.initState();
     init();
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       setState(() {
         isLoading = false;
       });

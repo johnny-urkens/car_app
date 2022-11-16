@@ -45,7 +45,7 @@ class _RatingPageState extends State<RatingPage> {
       var i = rating!.carBrand;
       return Scaffold(
         appBar: AppBar(
-          title: const Text('DetailPage'),
+          title: const Text('RatingPage'),
         ),
         body: Center(
           child: Column(

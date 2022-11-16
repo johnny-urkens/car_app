@@ -42,7 +42,7 @@ class NavigationPageState extends State {
 
   // Future init() async {
   //   final naam = await UsersecureStorage.getUserName() ?? '';
-   
+
   // }
 
   @override
@@ -65,14 +65,13 @@ class NavigationPageState extends State {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.adf_scanner),
-              label: 'scan',
+              label: 'Scan',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.login),
               label: 'Login',
             ),
           ],
-
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
           onTap: _onItemTapped,
