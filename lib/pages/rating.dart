@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../apis/car_api.dart';
 import '../models/rating.dart';
 import 'navigation.dart';
-import '../utils/capitalize.dart';
 
 class RatingPage extends StatefulWidget {
   final String carBrand;
@@ -47,7 +46,7 @@ class _RatingPageState extends State<RatingPage> {
       var i = rating!.carBrand;
       return Scaffold(
         appBar: AppBar(
-          title: const Text('RatingPage'),
+          title: const Text('DetailPage'),
         ),
         body: Center(
           child: Column(
@@ -59,18 +58,20 @@ class _RatingPageState extends State<RatingPage> {
                 width: 315,
                 height: 110,
               ),
-              Text(rating!.carBrand.capitalize()),
+              Text(rating!.carBrand),
+              Text(rating!.userScores[0].userName),
+              Text(rating!.userScores[0].scoreNumber.toString()),
               SizedBox(
                 height: 40.0,
                 width: 250.0,
                 child: Divider(
-                  color: Colors.lightGreen.shade500,
+                  color: Colors.blue.shade500,
                 ),
               ),
               const Text(
                 'Use the slider to set new rating value',
                 style: TextStyle(
-                    color: Colors.lightGreen,
+                    color: Colors.blue,
                     fontSize: 15.0,
                     fontWeight: FontWeight.w900),
               ),
@@ -86,12 +87,25 @@ class _RatingPageState extends State<RatingPage> {
               Text(
                 score.toString(),
                 style: const TextStyle(
-                    color: Colors.lightGreen,
+                    color: Colors.blue,
                     fontSize: 25.0,
                     fontWeight: FontWeight.w900),
               ),
               ElevatedButton(
-                  onPressed: _updateRating, child: const Text('Update rating'))
+                  onPressed: _updateRating, child: const Text('Update rating')),
+              SizedBox(
+                height: 100.0,
+                width: 250.0,
+                child: Divider(
+                  color: Colors.blue.shade500,
+                ),
+              ),
+              ElevatedButton(
+                  onPressed: _deleteCar,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                  ),
+                  child: const Text('Delete this car')),
             ],
           ),
         ),
@@ -101,6 +115,18 @@ class _RatingPageState extends State<RatingPage> {
 
   void _updateRating() {
     CarApi.updateRating(rating!.userScores[0].userName, rating!.carBrand, score)
+        .then((result) {
+      Navigator.pop(context, true);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NavigationPage(),
+          ));
+    });
+  }
+
+  void _deleteCar() {
+    CarApi.deleteCar(rating!.carBrand, rating!.userScores[0].userName)
         .then((result) {
       Navigator.pop(context, true);
       Navigator.push(

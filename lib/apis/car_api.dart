@@ -1,8 +1,7 @@
-// import 'package:car_app/models/statistic.dart';
-// ignore: depend_on_referenced_packages
+import 'package:car_app/models/statistic.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../utils/user_secure_storage.dart';
+
 import '../models/personalCar.dart';
 import '../models/car.dart';
 import '../models/rating.dart';
@@ -29,6 +28,7 @@ class CarApi {
     var url = Uri.https(server, '/statistics/user/$name');
 
     final response = await http.get(url);
+    print(url);
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse
@@ -56,12 +56,12 @@ class CarApi {
 // Om een update te doen van de rating
   static Future<PersonalCar> updateRating(
       String userName, String carBrand, int scoreNumber) async {
-    final Map<String, String> queryParameters = <String, String>{
-      'userName': userName,
-      'carBrand': carBrand,
+    final Map<String, String> _queryParameters = <String, String>{
+      'userName': '$userName',
+      'carBrand': '$carBrand',
       'scoreNumber': '$scoreNumber'
     };
-    var url = Uri.https(server, '/statistics', queryParameters);
+    var url = Uri.https(server, '/statistics', _queryParameters);
     // print(url);
     var userScores = [];
     userScores.add(userName);
@@ -77,5 +77,17 @@ class CarApi {
     } else {
       throw Exception('Failed to update rating');
     }
+  }
+
+  static Future<http.Response> deleteCar(
+      String carBrand, String userName) async {
+    var url = Uri.https(server, 'statistics/$userName/car/$carBrand');
+    final http.Response response = await http.delete(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    return response;
   }
 }
