@@ -78,7 +78,7 @@ class PersonalCarListState extends State<PersonalCarList> {
   void initState() {
     super.initState();
     init();
-    Future.delayed(const Duration(milliseconds: 1500), () {
+    Future.delayed(const Duration(milliseconds: 2000), () {
       setState(() {
         isLoading = false;
       });
@@ -158,16 +158,11 @@ class PersonalCarListState extends State<PersonalCarList> {
                 child: Column(
                   children: [
                     image = Image(
-                      image: AssetImage('assets/$brand.jpg'),
+                      image: AssetImage('assets/$brand.png'),
                       width: 315,
                       height: 110,
                     ),
                     Text(carList[position].carBrand.capitalize()),
-                    Text(carList[position]
-                        .userScores[0]
-                        .userName
-                        .toString()
-                        .capitalize()),
                     Text(
                         carList[position].userScores[0].scoreNumber.toString()),
                   ],

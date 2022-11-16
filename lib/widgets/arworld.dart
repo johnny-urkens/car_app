@@ -1,6 +1,10 @@
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
+import '../models/objectReceived.dart';
+import '../apis/car_api.dart';
+import 'package:car_app/utils/user_secure_storage.dart';
+import '../models/personalCar.dart';
 
 class ARWorldWidget extends StatefulWidget {
   const ARWorldWidget({Key? key}) : super(key: key);
@@ -19,10 +23,24 @@ class _ARWorldWidgetState extends State<ARWorldWidget>
       cameraPosition: CameraPosition.BACK,
       cameraResolution: CameraResolution.AUTO);
   List<String> features = ["object_tracking"];
+  String userName = '';
+  List<PersonalCar> carList = [];
+  int count = 0;
 
   @override
   void initState() {
     super.initState();
+
+    // Get the username from the local storage
+    Future init() async {
+      final tempName = await UsersecureStorage.getUserName() ?? '';
+      setState(() {
+        userName = tempName.toLowerCase();
+        _getPersonalCars();
+      });
+    }
+
+    init();
 
     WidgetsBinding.instance.addObserver(this);
 
@@ -32,6 +50,15 @@ class _ARWorldWidgetState extends State<ARWorldWidget>
       startupConfiguration: startupConfiguration,
       features: features,
     );
+  }
+
+  void _getPersonalCars() {
+    CarApi.fetchPersonalCars(userName).then((result) {
+      setState(() {
+        carList = result;
+        count = result.length;
+      });
+    });
   }
 
   @override
@@ -68,6 +95,26 @@ class _ARWorldWidgetState extends State<ARWorldWidget>
     architectWidget.load(
         "wikitude_object_tracking/index.html", onLoadSuccess, onLoadFailed);
     architectWidget.resume();
+    architectWidget.setJSONObjectReceivedCallback(
+        (result) => onJSONObjectReceived(result, userName, carList));
+  }
+
+  void onJSONObjectReceived(
+      Map<String, dynamic> jsonObject, userName, carList) async {
+    var resultobject = ARImageResponse.fromJson(jsonObject);
+    String carBrand = resultobject.objectScanned;
+
+    bool carAlreadyScanned = false;
+    for (int i = 0; i < carList.length; i++) {
+      if (carList[i].carBrand.toString() == carBrand) {
+        carAlreadyScanned = true;
+      }
+    }
+
+    if (carAlreadyScanned == false) {
+      CarApi.updateRating(userName, carBrand, 0);
+    }
+
   }
 
   Future<void> onLoadSuccess() async {

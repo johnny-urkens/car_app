@@ -30,6 +30,7 @@ class _RatingPageState extends State<RatingPage> {
     CarApi.fetchRating(carBrand, userScores).then((result) => {
           setState(() {
             rating = result;
+            score = result.userScores[0].scoreNumber;
           })
         });
   }
@@ -53,12 +54,11 @@ class _RatingPageState extends State<RatingPage> {
             children: [
               image = Image(
                 //get the accompanying photo
-                image: AssetImage('assets/$i.jpg'),
+                image: AssetImage('assets/$i.png'),
                 width: 315,
                 height: 110,
               ),
               Text(rating!.carBrand),
-              Text(rating!.userScores[0].userName),
               Text(rating!.userScores[0].scoreNumber.toString()),
               SizedBox(
                 height: 40.0,
